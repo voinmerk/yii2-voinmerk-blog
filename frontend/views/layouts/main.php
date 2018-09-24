@@ -10,6 +10,12 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$this->registerLinkTag([
+    'rel' => 'shortcut icon',
+    'type' => 'image/x-icon',
+    'href' => '/favicon.png',
+]);
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -32,20 +38,26 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Resume', 'url' => ['/site/resume']],
     ];
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => $menuItems,
+    ]);
+    $menuItems = [];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Signup', 'url' => ['/auth/signup']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/auth/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
+            . Html::beginForm(['/auth/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
@@ -60,20 +72,21 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <!-- <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+    </div> -->
+
+    <?= $content ?>
 </div>
 
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"><a href="https://vk.com/voinmerk" target="_blank"><i class="fa fa-vk"></i></a></p>
     </div>
 </footer>
 

@@ -1,29 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
 html,
 body {
     height: 100%;
+    color: #00263b;
+    font-family: 'Montserrat', 'Lato', sans-serif;
 }
+
+p {
+	font-size: 18px;
+}
+
+::selection {background: #00263bb8; color:#fff;}
+::-moz-selection {background: #00263bb8; color:#fff;}
+::-webkit-selection {background: #00263bb8; color:#fff;}
 
 .wrap {
     min-height: 100%;
     height: auto;
     margin: 0 auto -60px;
-    padding: 0 0 60px;
+    padding: 51px 0 60px;
+    background-color: #f5f5f5;
 }
 
 .wrap > .container {
     padding: 70px 15px 20px;
 }
 
+.navbar-default {
+    background-color: #fc7d1c;
+    border-color: #dd7500;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #fff;
+    font-weight: 700;
+    background-color: #dd7500;
+}
+
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
 
-.jumbotron {
+.banner {
+    width: 100%;
+    height: 580px;
+    background-image: url('/img/flatlay.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    z-index: 1;
+}
+
+.banner:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: rgba(81, 87, 105, 0.4);
+    content: " ";
+}
+
+.banner h1 {
+    color: #fff;
+    text-transform: uppercase;
     text-align: center;
-    background-color: transparent;
+    text-shadow: 0px 0px 25px rgba(0,0,0,0.5);
+    font-weight: 700;
+    font-size: 42px;
+    margin: 0;
+    padding-top: calc(580px / 2 - 150px / 2);
+}
+
+.jumbotron {
+    margin-top: -155px;
+    text-align: center;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+    z-index: 2;
 }
 
 .jumbotron .btn {
@@ -117,4 +189,120 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+.card {
+    background-color: #fff;
+    margin-bottom: 25px;
+    padding: 5px 10px;
+    border: 1px solid #eee;
+    border-radius: 0;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.25);
+}
+
+.site-resume .card {
+    border: none;
+}
+
+.card h2 {
+    margin: 10px 0;
+}
+
+.card p {
+    text-align: justify;
+}
+
+.card .btn {
+    margin-bottom: 10px;
+}
+
+.btn {
+    border-radius: 3px;
+}
+
+.page-header {
+    padding-bottom: 0;
+    margin: 0px 0 20px;
+    border-bottom: none;
+    text-align: center;
+}
+
+.page-header h2 {
+    font-size: 36px;
+}
+
+.no-index {
+    padding-top: 51px;
+}
+
+.site-resume i.fa {
+    display: inline-block;
+    width: 20px;
+    margin-right: 5px;
+    text-align: center;
+    color: #fc7d1c;
+}
+
+.panel {
+    border-radius: 0;
+}
+
+.label {
+    display: inline-block;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: normal;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+/* padding-bottom and top for image */
+.mfp-no-margins img.mfp-img {
+    padding: 0;
+}
+/* position of shadow behind the image */
+.mfp-no-margins .mfp-figure:after {
+    top: 0;
+    bottom: 0;
+}
+/* padding for main container */
+.mfp-no-margins .mfp-container {
+    padding: 0;
+}
+
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+    opacity: 0;
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all 0.3s ease-out; 
+    -moz-transition: all 0.3s ease-out; 
+    -o-transition: all 0.3s ease-out; 
+    transition: all 0.3s ease-out;
+}
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+        opacity: 1;
+}
+.mfp-with-zoom.mfp-ready.mfp-bg {
+        opacity: 0.8;
+}
+
+.mfp-with-zoom.mfp-removing .mfp-container, 
+.mfp-with-zoom.mfp-removing.mfp-bg {
+    opacity: 0;
 }

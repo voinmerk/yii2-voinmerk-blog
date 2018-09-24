@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-voinmerk-public',
+    'name' => 'voinmerk.ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -20,6 +21,7 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-public', 'httpOnly' => true],
+            'loginUrl' => ['auth/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -41,7 +43,18 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                // Site controller
                 '' => 'site/index',
+                'about' => 'site/about',
+                'contact' => 'site/contact',
+                'resume' => 'site/resume',
+
+                // Auth controller
+                'login' => 'auth/login',
+                'logout' => 'auth/logout',
+                'signup' => 'auth/signup',
+                'forgot-password' => 'auth/request-password-reset',
+                'recovery-password/<token:\+w>' => 'auth/reset-password',
             ],
         ],
     ],
