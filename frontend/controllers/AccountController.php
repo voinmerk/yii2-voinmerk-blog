@@ -1,12 +1,47 @@
 <?php
-
 namespace frontend\controllers;
 
-class AccountController extends \yii\web\Controller
+use Yii;
+use yii\web\Controller;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+class AccountController extends Controller
 {
-    public function actionIndex()
+	/**
+     * {@inheritdoc}
+     */
+    public function behaviors()
     {
-        return $this->render('index');
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
     }
 
+    public function actionIndex()
+    {
+    	$data = [];
+
+    	$data['user'] = Yii::$app->user->identity;
+
+        return $this->render('index');
+    }
 }

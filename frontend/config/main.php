@@ -83,6 +83,9 @@ return [
                 // Portfolio controller
                 'portfolio/<id:[\w_-]+>' => 'portfolio/view',
                 'portfolio' => 'portfolio/index',
+
+                // Account controller
+                'account' => 'account/index',
             ],
         ],
     ],
