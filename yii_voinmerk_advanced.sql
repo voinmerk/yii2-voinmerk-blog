@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
--- Версия сервера:               5.7.20 - MySQL Community Server (GPL)
+-- Версия сервера:               5.7.16 - MySQL Community Server (GPL)
 -- Операционная система:         Win64
 -- HeidiSQL Версия:              9.5.0.5196
 -- --------------------------------------------------------
@@ -15,6 +15,82 @@
 -- Дамп структуры базы данных yii_voinmerk_advanced
 CREATE DATABASE IF NOT EXISTS `yii_voinmerk_advanced` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `yii_voinmerk_advanced`;
+
+-- Дамп структуры для таблица yii_voinmerk_advanced.blog
+CREATE TABLE IF NOT EXISTS `blog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `preview_content` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_keywords` text NOT NULL,
+  `meta_description` text NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `FK_blog_user_created` (`created_by`),
+  KEY `FK_blog_user_updated` (`updated_by`),
+  CONSTRAINT `FK_blog_user_created` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_blog_user_updated` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы yii_voinmerk_advanced.blog: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `blog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `blog` ENABLE KEYS */;
+
+-- Дамп структуры для таблица yii_voinmerk_advanced.blog_category
+CREATE TABLE IF NOT EXISTS `blog_category` (
+  `blog_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы yii_voinmerk_advanced.blog_category: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `blog_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `blog_category` ENABLE KEYS */;
+
+-- Дамп структуры для таблица yii_voinmerk_advanced.blog_tag
+CREATE TABLE IF NOT EXISTS `blog_tag` (
+  `blog_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы yii_voinmerk_advanced.blog_tag: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `blog_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `blog_tag` ENABLE KEYS */;
+
+-- Дамп структуры для таблица yii_voinmerk_advanced.category
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_keywords` text NOT NULL,
+  `meta_description` text NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `FK_category_user_created` (`created_by`),
+  KEY `FK_category_user_updated` (`updated_by`),
+  CONSTRAINT `FK_category_user_created` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_category_user_updated` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы yii_voinmerk_advanced.category: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
 -- Дамп структуры для таблица yii_voinmerk_advanced.migration
 CREATE TABLE IF NOT EXISTS `migration` (
@@ -71,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `portfolio_image` (
   CONSTRAINT `FK_portfolio_image_portfolio` FOREIGN KEY (`portfolio_id`) REFERENCES `portfolio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы yii_voinmerk_advanced.portfolio_image: ~4 rows (приблизительно)
+-- Дамп данных таблицы yii_voinmerk_advanced.portfolio_image: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `portfolio_image` DISABLE KEYS */;
 INSERT INTO `portfolio_image` (`id`, `portfolio_id`, `src`, `title`, `alt`) VALUES
 	(1, 1, 'img/td-ugelevator-home.jpg', '1', '1'),
@@ -153,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `resume_experience` (
   CONSTRAINT `FK_resume_experience_resume` FOREIGN KEY (`resume_id`) REFERENCES `resume` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы yii_voinmerk_advanced.resume_experience: ~2 rows (приблизительно)
+-- Дамп данных таблицы yii_voinmerk_advanced.resume_experience: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `resume_experience` DISABLE KEYS */;
 INSERT INTO `resume_experience` (`id`, `resume_id`, `position`, `organization`, `city`, `start_date`, `end_date`) VALUES
 	(1, 1, 'Техник-программист', 'ГБПОУ НСО "НОВОСИБИРСКИЙ ПРОФЕССИОНАЛЬНО-ПЕДАГОГИЧЕСКИЙ КОЛЛЕДЖ"', 'Новосибирск', '2017-05-02', '2018-09-24');
@@ -165,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `resume_portfolio` (
   `portfolio_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы yii_voinmerk_advanced.resume_portfolio: ~2 rows (приблизительно)
+-- Дамп данных таблицы yii_voinmerk_advanced.resume_portfolio: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `resume_portfolio` DISABLE KEYS */;
 INSERT INTO `resume_portfolio` (`resume_id`, `portfolio_id`) VALUES
 	(1, 3),
@@ -183,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `resume_skill` (
   CONSTRAINT `FK_resume_skill_resume` FOREIGN KEY (`resume_id`) REFERENCES `resume` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы yii_voinmerk_advanced.resume_skill: ~8 rows (приблизительно)
+-- Дамп данных таблицы yii_voinmerk_advanced.resume_skill: ~10 rows (приблизительно)
 /*!40000 ALTER TABLE `resume_skill` DISABLE KEYS */;
 INSERT INTO `resume_skill` (`id`, `resume_id`, `content`) VALUES
 	(1, 1, 'Работаю с реляционными базами данных, такими как MySQL, MSSQL, PostgreSQL и MariaDB.'),
@@ -197,6 +273,17 @@ INSERT INTO `resume_skill` (`id`, `resume_id`, `content`) VALUES
 	(9, 1, 'В своих проектах использовал Drupal, Wordpress, Yii, Laravel, XenForo и OpenCart.'),
 	(10, 1, 'Имею навыки администрирование и проектирование баз данных.');
 /*!40000 ALTER TABLE `resume_skill` ENABLE KEYS */;
+
+-- Дамп структуры для таблица yii_voinmerk_advanced.tag
+CREATE TABLE IF NOT EXISTS `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы yii_voinmerk_advanced.tag: ~0 rows (приблизительно)
+/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 
 -- Дамп структуры для таблица yii_voinmerk_advanced.user
 CREATE TABLE IF NOT EXISTS `user` (

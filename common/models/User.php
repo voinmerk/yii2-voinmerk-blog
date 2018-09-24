@@ -20,6 +20,10 @@ use yii\web\IdentityInterface;
  * @property int $created_at
  * @property int $updated_at
  *
+ * @property Blog[] $frontendBlogsCreatedBy
+ * @property Blog[] $frontendBlogsUpdatedBy
+ * @property Category[] $frontendCategoriesCreatedBy
+ * @property Category[] $frontendCategoriesUpdatedBy
  * @property Portfolio[] $frontendPortfolioCreatedBy
  * @property Portfolio[] $frontendPortfolioUpdatedBy
  * @property Resume[] $frontendResumeCreatedBy
@@ -214,6 +218,38 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendBlogsCreatedBy()
+    {
+        return $this->hasMany(\frontend\models\Blog::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendBlogsUpdatedBy()
+    {
+        return $this->hasMany(\frontend\models\Blog::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendCategoriesCreatedBy()
+    {
+        return $this->hasMany(\frontend\models\Category::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendCategoriesUpdatedBy()
+    {
+        return $this->hasMany(\frontend\models\Category::className(), ['updated_by' => 'id']);
     }
 
     /**
