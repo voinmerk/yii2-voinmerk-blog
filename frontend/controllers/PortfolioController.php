@@ -4,7 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 
-// use frontend\models\Portfolio;
+use frontend\models\Portfolio;
 
 /**
  * PortfolioController class
@@ -15,13 +15,19 @@ class PortfolioController extends Controller
 	{
 		$data = [];
 
-		$this->render('index', $data);
+		return $this->render('index', $data);
 	}
 
 	public function actionView($id)
 	{
 		$data = [];
 
-		$this->render('view', $data);
+		if(Yii::$app->request->isAjax) {
+			$data['portfolio'] = Portfolio::getPortfolioById($id);
+
+			return $this->renderAjax('ajax/view', $data);
+		}
+
+		return $this->render('view', $data);
 	}
 }

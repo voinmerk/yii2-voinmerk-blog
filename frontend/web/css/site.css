@@ -306,3 +306,27 @@ a.desc:after {
 .mfp-with-zoom.mfp-removing.mfp-bg {
     opacity: 0;
 }
+
+.white-popup-block {
+    background: #FFF;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 650px;
+    margin: 40px auto;
+    position: relative;
+}
+
+.white-popup-block h1 {
+    font-size: 24px;
+}
+
+.white-popup-block p {
+    font-size: 14px;
+}
+
+.thumbnail {
+    border-radius: 0;
+    border: none;
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.30);
+    padding: 0;
+}

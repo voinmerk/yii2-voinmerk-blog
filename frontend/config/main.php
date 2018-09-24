@@ -67,7 +67,7 @@ return [
                 '' => 'site/index',
                 'about' => 'site/about',
                 'contact' => 'site/contact',
-                'resume' => 'site/resume',
+                'my-resume' => 'site/resume',
 
                 // Auth controller
                 'login' => 'auth/login',
@@ -75,6 +75,14 @@ return [
                 'signup' => 'auth/signup',
                 'forgot-password' => 'auth/request-password-reset',
                 'recovery-password/<token:\+w>' => 'auth/reset-password',
+
+                // Resume controller
+                'resume/<id:[\w_-]+>' => 'resume/view',
+                'resume' => 'resume/index',
+
+                // Portfolio controller
+                'portfolio/<id:[\w_-]+>' => 'portfolio/view',
+                'portfolio' => 'portfolio/index',
             ],
         ],
     ],

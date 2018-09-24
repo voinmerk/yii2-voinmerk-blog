@@ -8,18 +8,22 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "{{%user}}".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ *
+ * @property Portfolio[] $frontendPortfolioCreatedBy
+ * @property Portfolio[] $frontendPortfolioUpdatedBy
+ * @property Resume[] $frontendResumeCreatedBy
+ * @property Resume[] $frontendResumeUpdatedBy
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -51,8 +55,33 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['created_at', 'updated_at'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('common', 'ID'),
+            'username' => Yii::t('common', 'Username'),
+            'auth_key' => Yii::t('common', 'Auth Key'),
+            'password_hash' => Yii::t('common', 'Password Hash'),
+            'password_reset_token' => Yii::t('common', 'Password Reset Token'),
+            'email' => Yii::t('common', 'Email'),
+            'status' => Yii::t('common', 'Status'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 
@@ -185,5 +214,37 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendPortfolioCreatedBy()
+    {
+        return $this->hasMany(\frontend\models\Portfolio::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendPortfolioUpdatedBy()
+    {
+        return $this->hasMany(\frontend\models\Portfolio::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendResumeCreatedBy()
+    {
+        return $this->hasMany(\frontend\models\Resume::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFrontendResumeUpdatedBy()
+    {
+        return $this->hasMany(\frontend\models\Resume::className(), ['updated_by' => 'id']);
     }
 }

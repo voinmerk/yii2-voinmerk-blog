@@ -4,7 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 
-// use frontend\models\Resume;
+use frontend\models\Resume;
 
 /**
  * ResumeController class
@@ -15,15 +15,17 @@ class ResumeController extends Controller
 	{
 		$data = [];
 
-		// $data['resumes'] = Resume::getList();
+		$data['resumes'] = Resume::getResumeAll();
 
-		$this->render('index', $data);
+		return $this->render('index', $data);
 	}
 
 	public function actionView($id)
 	{
 		$data = [];
 
-		$this->render('view', $data);
+		$data['resume'] = Resume::getResumeOne($id);
+
+		return $this->render('view', $data);
 	}
 }

@@ -17,14 +17,21 @@ $this->title = 'Все резюме';
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<div class="panel-title">
-							<h2><?= $resume['full_name'] ?></h2>
-						</div>
+						<h2 class="panel-title"><?= $resume['full_name'] ?></h2>
 					</div>
 
 					<div class="panel-body">
+						<div class="col-lg-4">
+							<?= Html::img($resume['image'], ['class' => 'thumbnail', 'style' => 'width: 100%;']) ?>
+						</div>
 
-						<?= Html::a('Просмотреть', ['resume/view', 'id' => $resume['id']], ['class' => 'btn btn-default']) ?>
+						<div class="col-lg-8">
+							<p><?= $resume['position'] ?></p>
+						</div>
+					</div>
+
+					<div class="panel-footer clearfix">
+						<?= Html::a('Просмотреть', ['resume/view', 'id' => $resume['slug']], ['class' => 'btn btn-default pull-right']) ?>
 					</div>
 				</div>
 			</div>

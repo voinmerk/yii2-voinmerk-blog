@@ -42,10 +42,9 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Resume', 'url' => ['/resume/index']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
-        ['label' => 'Resume', 'url' => ['/site/resume']],
     ];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-left'],

@@ -5,7 +5,8 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use frontend\models\ContactForm;
+
+use frontend\models\forms\ContactForm;
 
 /**
  * Site controller
@@ -43,7 +44,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $data = [];
+
+        $data['portfolios'] = \frontend\models\Portfolio::getPortfolio();
+
+        return $this->render('index', $data);
     }
 
     /**
