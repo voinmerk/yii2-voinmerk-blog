@@ -39,6 +39,26 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'i18n' => [
+            'translations' => [
+                'frontend*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@messages',
+                    'fileMap' => [
+                        'frontend'       => 'frontend.php',
+                        'frontend/error' => 'error.php',
+                    ],
+                ],
+                'common*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@messages',
+                    'fileMap' => [
+                        'common'       => 'common.php',
+                        'common/error' => 'error.php',
+                    ],
+                ],
+            ],
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
