@@ -42,9 +42,10 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Resume', 'url' => ['/resume/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Блог', 'url' => ['/blog/index']],
+        ['label' => 'Резюме', 'url' => ['/resume/index']],
+        ['label' => 'О проекте', 'url' => ['/site/about']],
+        ['label' => 'Контакты', 'url' => ['/site/contact']],
     ];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-left'],
@@ -52,15 +53,15 @@ AppAsset::register($this);
     ]);
     $menuItems = [];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/auth/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/auth/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/auth/signup']];
+        $menuItems[] = ['label' => 'Вход', 'url' => ['/auth/login']];
     } else {
-        $menuItems[] = ['label' => 'Account', 'url' => ['/account/index']];
-        
+        $menuItems[] = ['label' => 'Аккаунт', 'url' => ['/account/index']];
+
         $menuItems[] = '<li>'
             . Html::beginForm(['/auth/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Выход (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

@@ -10,6 +10,8 @@ return [
     'id' => 'app-voinmerk-public',
     'name' => 'voinmerk.ru',
     'basePath' => dirname(__DIR__),
+    'sourceLanguage' => 'ru',
+    'language' => 'ru-RU',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [

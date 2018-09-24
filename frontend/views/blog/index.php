@@ -3,12 +3,12 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-$this->title = 'Ваш аккаунт';
+$this->title = 'voinmerk - Все блоги';
 ?>
-<div class="account-index">
+<div class="blog-index">
 	<div class="container">
 		<div class="page-header">
-			<h1>Ваш аккаунт</h1>
+			<h1>Все блоги</h1>
 		</div>
 
 		<div class="row">
