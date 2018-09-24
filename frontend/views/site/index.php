@@ -2,7 +2,24 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
+$js = <<<JS
+$('.image-popup-no-margins').magnificPopup({
+    type: 'image',
+    closeOnContentClick: true,
+    closeBtnInside: false,
+    fixedContentPos: true,
+    mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+    image: {
+        verticalFit: true
+    },
+    zoom: {
+        enabled: true,
+        duration: 300 // don't foget to change the duration also in CSS
+    }
+});
+JS;
+
+$this->registerJs($js);
 
 $this->title = 'Веб-разработчик';
 ?>
@@ -34,33 +51,33 @@ $this->title = 'Веб-разработчик';
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card clearfix">
-                        <h3>ТД ЮГ-элеватор</h3>
+                        <h3>ТД ЮГ-элеватор - Сайт</h3>
 
                         <p>Разработка сайта для особо крупной компании в украине. ЮГ Элеватор - завод элеваторного оборудования. Сайт был разработан на платформе wordpress.</p>
 
-                        <p><?= Html::img('@web/img/td-ugelevator-home.jpg', ['style' => 'width: 100%;']) ?></p>
+                        <p><?= Html::a(Html::img('@web/img/td-ugelevator-home.jpg', ['style' => 'width: 100%;']), '@web/img/td-ugelevator-home.jpg', ['class' => 'image-popup-no-margins']) ?></p>
 
                         <p><a class="btn btn-link pull-right" href="http://td-ugelevator.com" target="_blank">Посмотреть &raquo;</a></p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="card clearfix">
-                        <h3>NPPK54 - Сайт</h3>
+                        <h3>НППК - Сенсорный сайт</h3>
 
                         <p>Разработан на Yii2 Framework. Сайт для информационной доски Новосибирского профессионально-педагогического колледжа.</p>
 
-                        <p><?= Html::img('@web/img/nppk-home.png', ['style' => 'width: 100%;']) ?></p>
+                        <p><?= Html::a(Html::img('@web/img/nppk-home.png', ['style' => 'width: 100%;']), '@web/img/nppk-home.png', ['class' => 'image-popup-no-margins']) ?></p>
 
                         <p><a class="btn btn-link pull-right" href="http://info.nppk54.ru" target="_blank">Посмотреть &raquo;</a></p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="card clearfix">
-                        <h3>Cristalix Project</h3>
+                        <h3>Cristalix Project - Форум</h3>
 
                         <p>Разработан на форумной платформе Xenforo 1.4.3</p>
 
-                        <p><?= Html::img('@web/img/cristalix-home.jpg', ['style' => 'width: 100%;']) ?></p>
+                        <p><?= Html::a(Html::img('@web/img/cristalix-home.jpg', ['style' => 'width: 100%;']), '@web/img/cristalix-home.jpg', ['class' => 'image-popup-no-margins']) ?></p>
 
                         <p><a class="btn btn-link pull-right" href="http://xenforo.cristalix.voinmerk.ru" target="_blank">Посмотреть &raquo;</a></p>
                     </div>
@@ -74,7 +91,7 @@ $this->title = 'Веб-разработчик';
 
                         <p>Разработан на движке Yii2 Framework. Сайт, пока мало известного игрового проекта.</p>
 
-                        <p><?= Html::img('@web/img/amazonia-home.png', ['style' => 'width: 100%;']) ?></p>
+                        <p><?= Html::a(Html::img('@web/img/amazonia-home.png', ['style' => 'width: 100%;']), '@web/img/amazonia-home.png', ['class' => 'image-popup-no-margins']) ?></p>
 
                         <p><a class="btn btn-link pull-right" href="http://yii.amazonia.voinmerk.ru" target="_blank">Посмотреть &raquo;</a></p>
                     </div>
