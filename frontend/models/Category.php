@@ -96,7 +96,7 @@ class Category extends \yii\db\ActiveRecord
     {
         $data = self::find()
                     ->select(['id', 'parent_id', 'title', 'slug', 'sort_order', 'meta_title'])
-                    ->where(['status' => STATUS_ACTIVE])
+                    ->where(['status' => self::STATUS_ACTIVE])
                     ->indexBy('id')
                     ->orderBy(['sort_order' => SORT_ASC])
                     ->asArray()
