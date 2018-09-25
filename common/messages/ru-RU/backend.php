@@ -15,6 +15,9 @@ return [
 
 	'Status' => 'Статус',
 
+	'Published' => 'Опубликовано',
+	'Unpublished' => 'Не опубликовано',
+
 	'Created By' => 'Автор',
 	'Updated By' => 'Модератор',
 	'Created At' => 'Дата создания',

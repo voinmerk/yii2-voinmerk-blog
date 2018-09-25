@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="blog-create">
 
     <?= $this->render('_form', [
-    'model' => $model,
+    	'blog' => $blog,
     ]) ?>
 
 </div>

@@ -54,18 +54,20 @@ class Portfolio extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function behaveriors()
+    public function behaviors()
     {
         return [
             'slug' => [
-                'class' => \yii\behaveriors\SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',
                 'ensureUnique' => true,
             ],
             'blame' => [
-                'class' => \yii\behaveriors\BlameableBehavior::className(),
+                'class' => \yii\behaviors\BlameableBehavior::className(),
             ],
             'timestamp' => [
-                'class' => \yii\behaveriors\TimestampBehavior::className(),
+                'class' => \yii\behaviors\TimestampBehavior::className(),
             ],
         ];
     }

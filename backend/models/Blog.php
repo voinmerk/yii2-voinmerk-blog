@@ -42,7 +42,7 @@ class Blog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'preview_content', 'meta_title', 'meta_keywords', 'meta_description', 'slug', 'created_at', 'updated_at'], 'required'],
+            [['title', 'content', 'preview_content', 'meta_title', 'meta_keywords', 'meta_description', 'slug'], 'required'],
             [['content', 'preview_content', 'meta_keywords', 'meta_description'], 'string'],
             [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
             [['title', 'meta_title', 'slug'], 'string', 'max' => 255],
@@ -55,18 +55,32 @@ class Blog extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function behaveriors()
+    public function behaviors()
     {
         return [
             'slug' => [
-                'class' => \yii\behaveriors\SluggableBehavior::className(),
+                'class' => \yii\behaviors\SluggableBehavior::className(),
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',
                 'ensureUnique' => true,
             ],
+            /*'slug' => [
+                'class' => 'Zelenin\yii\behaviors\Slug',
+                'slugAttribute' => 'slug',
+                'attribute' => 'title',
+                // optional params
+                'ensureUnique' => true,
+                'replacement' => '-',
+                'lowercase' => true,
+                'immutable' => false,
+                // If intl extension is enabled, see http://userguide.icu-project.org/transforms/general. 
+                'transliterateOptions' => 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;'
+            ],*/
             'blame' => [
-                'class' => \yii\behaveriors\BlameableBehavior::className(),
+                'class' => \yii\behaviors\BlameableBehavior::className(),
             ],
             'timestamp' => [
-                'class' => \yii\behaveriors\TimestampBehavior::className(),
+                'class' => \yii\behaviors\TimestampBehavior::className(),
             ],
         ];
     }
@@ -91,6 +105,27 @@ class Blog extends \yii\db\ActiveRecord
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getStatusList()
+    {
+        return [
+            0 => Yii::t('backend', 'Unpublished'),
+            1 => Yii::t('backend', 'Published'),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStatusName()
+    {
+        $status = $this->getStatusList();
+
+        return $status[$this->status];
     }
 
     /**

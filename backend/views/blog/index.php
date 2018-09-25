@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use rmrevin\yii\fontawesome\FontAwesome as Fa;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\BlogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -34,11 +36,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 'title',
-                'content:ntext',
                 [
                     'label' => 'Статус',
                     'attribute' => 'status',
-                    'value' => 'status',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        $class = $model->status ? ' label-success' : ' label-danger';
+                        $name = $model->statusName;
+
+                        return '<span class="label' . $class . '">' . $name . '</span>';
+                    },
+                    'filter' => \backend\models\Blog::getStatusList(),
                 ],
                 [
                     'label' => 'Автор',

@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
             ],
         ]) ?>
 
-        <?= $form->field($model, 'image')->fileInput(['multiple' => 'multiple']); ?>
+        <?= $form->field($model, 'image')->textInput(); ?>
 
         <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
 

@@ -9,11 +9,27 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use backend\models\forms\BlogForm;
+
 /**
  * BlogController implements the CRUD actions for Blog model.
  */
 class BlogController extends Controller
 {
+    private $request;
+    private $session;
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($id, $module, $config = [])
+    {
+        $this->request = Yii::$app->request;
+        $this->session = Yii::$app->session;
+
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * @inheritdoc
      */
@@ -35,13 +51,17 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BlogSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $data = [];
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if($this->session->hasFlash('success')) {
+            $data['success'] = $this->session->getFlash('success');
+        }
+
+        $searchModel = new BlogSearch();
+        $data['dataProvider'] = $searchModel->search($this->request->queryParams);
+        $data['searchModel'] = $searchModel;
+
+        return $this->render('index', $data);
     }
 
     /**
@@ -63,17 +83,23 @@ class BlogController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Blog();
+        $data = [];
 
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        $blog = new BlogForm();
+
+        if ($blog->load($this->request->post())) {
+            if ($result = $blog->createBlog()) {
+                $this->session->setFlash('success', 'Материал успешно создан!');
+
+                return $this->redirect(['index']);
+            } else {
+                $data['error_warning'] = 'Ошибка, что... Ошибка, а... Да, ошибка, что...';
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        $data['blog'] = $blog;
+
+        return $this->render('create', $data);
     }
 
     /**
@@ -84,15 +110,25 @@ class BlogController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $data = [];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $blog = new BlogForm();
+        $blog->loadData(Blog::findOne($id));
+
+        if ($blog->load($this->request->post())) {
+            if ($result = $blog->updateBlog($id)) {
+                $this->session->setFlash('success', 'Материал успешно обновлён!');
+
+                return $this->redirect(['index']);
+            } else {
+                $data['error_warning'] = 'Ошибка, что... Ошибка, а... Да, ошибка, что...';
+            }
         }
+
+        $data['blog'] = new BlogForm();
+        $data['model'] = Blog::findOne($id);
+
+        return $this->render('update', $data);
     }
 
     /**

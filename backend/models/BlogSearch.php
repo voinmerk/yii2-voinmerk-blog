@@ -47,7 +47,7 @@ class BlogSearch extends Blog
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]]
         ]);
 
         $this->load($params);

@@ -13,33 +13,35 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="box-body table-responsive">
 
+        <?php if(isset($error_warning)) { ?>
         <div class="alert alert-danger">
-            <?= $model->errors ?>
+            <p><?= $error_warning ?></p>
         </div>
+        <?php } ?>
 
-        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($blog, 'title')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'preview_content')->widget(CKEditor::className(),[
+        <?= $form->field($blog, 'preview_content')->widget(CKEditor::className(),[
             'editorOptions' => [
                 'preset' => 'basic',
                 'inline' => false,
             ],
         ]) ?>
 
-        <?= $form->field($model, 'content')->widget(CKEditor::className(),[
+        <?= $form->field($blog, 'content')->widget(CKEditor::className(),[
             'editorOptions' => [
                 'preset' => 'standart',
                 'inline' => false,
             ],
         ]) ?>
 
-        <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($blog, 'meta_title')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'meta_keywords')->textarea(['rows' => 6]) ?>
+        <?= $form->field($blog, 'meta_keywords')->textarea(['rows' => 6]) ?>
 
-        <?= $form->field($model, 'meta_description')->textarea(['rows' => 6]) ?>
+        <?= $form->field($blog, 'meta_description')->textarea(['rows' => 6]) ?>
 
-        <?= $form->field($model, 'status')->dropDownList([0 => 'Не опубликовано', 1 => 'Опубликовано']) ?>
+        <?= $form->field($blog, 'status')->dropDownList([0 => 'Не опубликовано', 1 => 'Опубликовано']) ?>
 
     </div>
     <div class="box-footer">
