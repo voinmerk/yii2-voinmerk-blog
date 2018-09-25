@@ -1,9 +1,8 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 use common\models\User;
 
@@ -19,7 +18,9 @@ use common\models\User;
  * @property string $city
  * @property string $biography
  * @property string $slug
+ * @property string $image
  * @property string $birth_date
+ * @property int $salary
  * @property int $gender
  * @property int $status
  * @property int $created_by
@@ -33,10 +34,8 @@ use common\models\User;
  * @property ResumeExperience[] $resumeExperiences
  * @property ResumeSkill[] $resumeSkills
  */
-class Resume extends ActiveRecord
+class Resume extends \yii\db\ActiveRecord
 {
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
     /**
      * {@inheritdoc}
      */
@@ -51,11 +50,11 @@ class Resume extends ActiveRecord
     public function rules()
     {
         return [
-            [['full_name', 'phone', 'email', 'position', 'category', 'city', 'biography', 'slug', 'birth_date', 'gender', 'created_at', 'updated_at'], 'required'],
+            [['full_name', 'phone', 'email', 'position', 'category', 'city', 'biography', 'slug', 'image', 'birth_date', 'salary', 'gender', 'created_at', 'updated_at'], 'required'],
             [['biography'], 'string'],
             [['birth_date'], 'safe'],
-            [['gender', 'created_by', 'updated_by', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['full_name', 'phone', 'email', 'position', 'category', 'city', 'slug'], 'string', 'max' => 255],
+            [['salary', 'gender', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['full_name', 'phone', 'email', 'position', 'category', 'city', 'slug', 'image'], 'string', 'max' => 255],
             [['slug'], 'unique'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
@@ -65,78 +64,47 @@ class Resume extends ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaveriors()
+    {
+        return [
+            'slug' => [
+                'class' => \yii\behaveriors\SluggableBehavior::className(),
+                'ensureUnique' => true,
+            ],
+            'blame' => [
+                'class' => \yii\behaveriors\BlameableBehavior::className(),
+            ],
+            'timestamp' => [
+                'class' => \yii\behaveriors\TimestampBehavior::className(),
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('frontend', 'ID'),
-            'full_name' => Yii::t('frontend', 'Full Name'),
-            'phone' => Yii::t('frontend', 'Phone'),
-            'email' => Yii::t('frontend', 'Email'),
-            'position' => Yii::t('frontend', 'Position'),
-            'category' => Yii::t('frontend', 'Category'),
-            'city' => Yii::t('frontend', 'City'),
-            'biography' => Yii::t('frontend', 'Biography'),
-            'slug' => Yii::t('frontend', 'Slug'),
-            'birth_date' => Yii::t('frontend', 'Birth Date'),
-            'gender' => Yii::t('frontend', 'Gender'),
-            'created_by' => Yii::t('frontend', 'Created By'),
-            'updated_by' => Yii::t('frontend', 'Updated By'),
-            'created_at' => Yii::t('frontend', 'Created At'),
-            'updated_at' => Yii::t('frontend', 'Updated At'),
+            'id' => Yii::t('backend', 'ID'),
+            'full_name' => Yii::t('backend', 'Full Name'),
+            'phone' => Yii::t('backend', 'Phone'),
+            'email' => Yii::t('backend', 'Email'),
+            'position' => Yii::t('backend', 'Position'),
+            'category' => Yii::t('backend', 'Category'),
+            'city' => Yii::t('backend', 'City'),
+            'biography' => Yii::t('backend', 'Biography'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'image' => Yii::t('backend', 'Image'),
+            'birth_date' => Yii::t('backend', 'Birth Date'),
+            'salary' => Yii::t('backend', 'Salary'),
+            'gender' => Yii::t('backend', 'Gender'),
+            'status' => Yii::t('backend', 'Status'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getResumeAll()
-    {
-        return self::find()
-                    ->where([
-                        'status' => self::STATUS_ACTIVE
-                    ])
-                    ->asArray()
-                    ->all();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getResumeOne($id)
-    {
-        return self::find()
-                    ->joinWith([
-                        'resumeSkills', 
-                        'resumeEducations', 
-                        'resumeExperiences', 
-                        'resumePortfolios'
-                    ])
-                    ->where([
-                        'resume.slug' => $id, 
-                        'resume.status' => self::STATUS_ACTIVE
-                    ])
-                    ->asArray()
-                    ->one();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function genders()
-    {
-        return [
-            'Male', 'Female',
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getGender($id)
-    {
-        $genders = $this->genders();
-
-        return $genders[$id];
     }
 
     /**

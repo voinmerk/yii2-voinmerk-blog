@@ -28,6 +28,15 @@ use yii\web\IdentityInterface;
  * @property Portfolio[] $frontendPortfolioUpdatedBy
  * @property Resume[] $frontendResumeCreatedBy
  * @property Resume[] $frontendResumeUpdatedBy
+ * 
+ * @property Blog[] $backendBlogsCreatedBy
+ * @property Blog[] $backendBlogsUpdatedBy
+ * @property Category[] $backendCategoriesCreatedBy
+ * @property Category[] $backendCategoriesUpdatedBy
+ * @property Portfolio[] $backendPortfoliosCreatedBy
+ * @property Portfolio[] $backendPortfoliosUpdatedBy
+ * @property Resume[] $backendResumesCreatedBy
+ * @property Resume[] $backendResumesUpdatedBy
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -282,5 +291,69 @@ class User extends ActiveRecord implements IdentityInterface
     public function getFrontendResumeUpdatedBy()
     {
         return $this->hasMany(\frontend\models\Resume::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendBlogsCreatedBy()
+    {
+        return $this->hasMany(\backend\models\Blog::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendBlogsUpdatedBy()
+    {
+        return $this->hasMany(\backend\models\Blog::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendCategoriesCreatedBy()
+    {
+        return $this->hasMany(\backend\models\Category::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendCategoriesUpdatedBy()
+    {
+        return $this->hasMany(\backend\models\Category::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendPortfoliosCreatedBy()
+    {
+        return $this->hasMany(\backend\models\Portfolio::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendPortfoliosUpdatedBy()
+    {
+        return $this->hasMany(\backend\models\Portfolio::className(), ['updated_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendResumesCreatedBy()
+    {
+        return $this->hasMany(\backend\models\Resume::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBackendResumesUpdatedBy()
+    {
+        return $this->hasMany(\backend\models\Resume::className(), ['updated_by' => 'id']);
     }
 }

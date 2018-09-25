@@ -10,6 +10,8 @@ return [
     'id' => 'app-voinmerk-admin',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
+    'sourceLanguage' => 'ru',
+    'language' => 'ru-RU',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
@@ -21,6 +23,7 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-admin', 'httpOnly' => true],
+            'loginUrl' => ['auth/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
