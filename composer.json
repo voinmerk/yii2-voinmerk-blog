@@ -21,7 +21,8 @@
         "dmstr/yii2-adminlte-asset": "^2.1",
         "insolita/yii2-adminlte-widgets": "~3.1",
         "mihaildev/yii2-ckeditor": "*",
-        "zelenin/yii2-slug-behavior": "~1.5.1"
+        "zelenin/yii2-slug-behavior": "~1.5.1",
+        "nkovacs/yii2-datetimepicker": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

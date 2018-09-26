@@ -1,7 +1,9 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 
 use rmrevin\yii\fontawesome\FontAwesome as Fa;
 
@@ -14,7 +16,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="blog-index box box-primary">
     <div class="box-header with-border">
-        <?= Html::a(Yii::t('backend', 'Create Blog'), ['create'], ['class' => 'btn btn-success btn-flat']) ?>
+        <?= $this->render('@viewPartial/header-box', [
+            'title' => Yii::t('backend', 'Blog list'),
+            'action_create' => Url::to(['blog/create']),
+            'action_copy' => Url::to(['blog/copy-rows']),
+            'action_delete' => Url::to(['blog/delete-rows']),
+        ]) ?>
     </div>
     <div class="box-body table-responsive no-padding">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -26,18 +33,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
                 [
                     'class' => 'yii\grid\CheckboxColumn',
-                    'checkboxOptions' => function(){
+                    'name' => 'id',
+                    'checkboxOptions' => function($model) {
                         return [
                             'onchange' => '
                                var keys = $("#grid").yiiGridView("getSelectedRows");
                                $(this).parent().parent().toggleClass("danger")
-                            '
+                            ',
+                            'value' => $model->id
                         ];
                     }
                 ],
-                'title',
+                'title:text',
+                'createdName:text',
                 [
-                    'label' => 'Статус',
+                    'label' => Yii::t('backend', 'Status'),
                     'attribute' => 'status',
                     'format' => 'html',
                     'value' => function($model) {
@@ -48,27 +58,36 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'filter' => \backend\models\Blog::getStatusList(),
                 ],
-                [
-                    'label' => 'Автор',
-                    'attribute' => 'created_by',
-                    'value' => 'createdBy.username',
-                ],
                 'updated_at:datetime',
+                /*[
+                    'attribute'=>'updated_at',
+                    'format' => 'datetime',
+                    'filter' => \nkovacs\datetimepicker\DateTimePicker::widget([
+                        'model' => $searchModel,
+                        'value' => $searchModel->updated_at,
+                        'attribute' => 'updated_at',
+                        'type' => 'updated_at',
+                        'format' => 'php:YYYY-MM-DD HH:mm',
+                        //'extraFormats' => ['YYYY-MM-DD HH:mm'],
+                    ]),
+                ],*/
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    // 'label' => 'Действие',
+                    'header' => Yii::t('backend', 'Actions'),
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a(Fa::icon('eye'), $url, ['class' => 'btn btn-primary']);
+                            return Html::a(Fa::icon('eye'), $url, ['class' => 'btn btn-primary', 'title' => Yii::t('yii', 'View'), 'data-toogle' => 'tooltip']);
                         },
                         'update' => function ($url, $model) {
-                            return Html::a(Fa::icon('pencil'), $url, ['class' => 'btn btn-warning']);
+                            return Html::a(Fa::icon('pencil'), $url, ['class' => 'btn btn-warning', 'title' => Yii::t('yii', 'Update'), 'data-toogle' => 'tooltip']);
                         },
                         /*'delete' => function ($url, $model) {
                             return Html::a(Fa::icon('trash-o'), $url, ['class' => 'btn btn-danger']);
                         },*/
                     ],
+                    'contentOptions' => ['class' => 'text-right'],
+                    'headerOptions' => ['class' => 'text-right']
                 ],
             ],
         ]); ?>

@@ -39,7 +39,9 @@ class BlogController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    //'delete' => ['POST'],
+                    'delete-rows' => ['POST'],
+                    'copy-rows' => ['POST'],
                 ],
             ],
         ];
@@ -137,9 +139,33 @@ class BlogController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    /*public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }*/
+
+    /**
+     * @inheritdoc
+     */
+    public function actionCopyRows($selected)
+    {
+        foreach($selected as $id) {
+            // Copy selected rows
+        }
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function actionDeleteRows($selected)
+    {
+        foreach($selected as $id) {
+            $this->findModel($id)->copy();
+        }
 
         return $this->redirect(['index']);
     }

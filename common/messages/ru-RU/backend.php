@@ -24,4 +24,16 @@ return [
 	'Updated At' => 'Дата обновления',
 
 	'Save' => 'Сохранить',
+
+	'Created Name' => 'Автор',
+	'Updated Name' => 'Модератор',
+
+	'Blog' => 'Блог',
+	'Blogs' => 'Блоги',
+	'Blog list' => 'Список блогов',
+
+	'Category' => 'Категория',
+	'Categories' => 'Категории',
+
+	'Actions' => 'Действия',
 ];

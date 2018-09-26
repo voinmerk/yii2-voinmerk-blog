@@ -68,6 +68,13 @@ return [
                 '' => 'site/index',
             ],
         ],
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-yellow',
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 ];
