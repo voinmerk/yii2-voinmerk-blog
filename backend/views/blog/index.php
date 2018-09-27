@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                var keys = $("#grid").yiiGridView("getSelectedRows");
                                $(this).parent().parent().toggleClass("danger")
                             ',
-                            'value' => $model->id
+                            'value' => $model->id,
                         ];
                     }
                 ],
@@ -77,17 +77,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{view} {update}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a(Fa::icon('eye'), $url, ['class' => 'btn btn-primary', 'title' => Yii::t('yii', 'View'), 'data-toogle' => 'tooltip']);
+                            return Html::a(Fa::icon('eye'), $url, ['class' => 'btn btn-primary btn-flat', 'title' => Yii::t('yii', 'View'), 'data-toogle' => 'tooltip']);
                         },
                         'update' => function ($url, $model) {
-                            return Html::a(Fa::icon('pencil'), $url, ['class' => 'btn btn-warning', 'title' => Yii::t('yii', 'Update'), 'data-toogle' => 'tooltip']);
+                            return Html::a(Fa::icon('pencil'), $url, ['class' => 'btn btn-warning btn-flat', 'title' => Yii::t('yii', 'Update'), 'data-toogle' => 'tooltip']);
                         },
-                        /*'delete' => function ($url, $model) {
-                            return Html::a(Fa::icon('trash-o'), $url, ['class' => 'btn btn-danger']);
-                        },*/
                     ],
+                    'headerOptions' => ['class' => 'text-right'],
                     'contentOptions' => ['class' => 'text-right'],
-                    'headerOptions' => ['class' => 'text-right']
                 ],
             ],
         ]); ?>
