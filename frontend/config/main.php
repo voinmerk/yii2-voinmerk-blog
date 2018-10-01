@@ -88,6 +88,10 @@ return [
 
                 // Account controller
                 'account' => 'account/index',
+
+                // User controller
+                'user/<id:[\w_-]+>' => 'user/view',
+                'users' => 'user/index',
             ],
         ],
     ],

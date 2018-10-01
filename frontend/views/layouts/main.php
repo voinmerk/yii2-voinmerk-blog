@@ -4,11 +4,8 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+
 use frontend\assets\AppAsset;
-use common\widgets\Alert;
 
 $this->registerLinkTag([
     'rel' => 'shortcut icon',
@@ -32,65 +29,21 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-default navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Блог', 'url' => ['/blog/index']],
-        ['label' => 'Резюме', 'url' => ['/resume/index']],
-        ['label' => 'О проекте', 'url' => ['/site/about']],
-        ['label' => 'Контакты', 'url' => ['/site/contact']],
-    ];
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-left'],
-        'items' => $menuItems,
-    ]);
-    $menuItems = [];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/auth/signup']];
-        $menuItems[] = ['label' => 'Вход', 'url' => ['/auth/login']];
-    } else {
-        $menuItems[] = ['label' => 'Аккаунт', 'url' => ['/account/index']];
+    <div class="wrap">
 
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/auth/logout'], 'post')
-            . Html::submitButton(
-                'Выход (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+        <?= $this->render('_header', [
 
-    <!-- <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
-    </div> -->
 
-    <?= $content ?>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><a href="https://vk.com/voinmerk" target="_blank"><i class="fa fa-vk"></i></a></p>
+        <?= $this->render('_content', [
+            'content' => $content
+        ]) ?>
+        
     </div>
-</footer>
+
+    <?= $this->render('_footer', [
+
+    ]) ?>
 
 <?php $this->endBody() ?>
 </body>

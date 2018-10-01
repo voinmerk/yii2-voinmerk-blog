@@ -21,7 +21,7 @@ class AccountController extends Controller
                 'only' => ['index'],
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'resume', 'portfolio', 'service', 'setting'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -38,10 +38,48 @@ class AccountController extends Controller
 
     public function actionIndex()
     {
-    	$data = [];
+        $data = [];
 
-    	$data['user'] = Yii::$app->user->identity;
+        $data['user'] = Yii::$app->user->identity;
 
-        return $this->render('index');
+        $data['model'] = \common\models\User::findOne(Yii::$app->user->identity->id);
+
+        return $this->render('index', $data);
+    }
+
+    public function actionResume()
+    {
+        $data = [];
+
+        $data['user'] = Yii::$app->user->identity;
+
+        return $this->render('resume', $data);
+    }
+
+    public function actionPortfolio()
+    {
+        $data = [];
+
+        $data['user'] = Yii::$app->user->identity;
+
+        return $this->render('portfolio', $data);
+    }
+
+    public function actionService()
+    {
+        $data = [];
+
+        $data['user'] = Yii::$app->user->identity;
+
+        return $this->render('service', $data);
+    }
+
+    public function actionSetting()
+    {
+        $data = [];
+
+        $data['user'] = Yii::$app->user->identity;
+
+        return $this->render('setting', $data);
     }
 }

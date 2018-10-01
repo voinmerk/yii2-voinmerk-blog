@@ -40,9 +40,25 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_SIGNUP = 0;    // Зарегистрирвоан, но не активирован
+    const STATUS_ACTIVE = 10;   // Активирован
+    const STATUS_BANNED = 20;   // Заблокирован (возможно восстановить)
+    const STATUS_DELETE = 30;   // Удалён (не возможно восстановить)
 
+    const TYPE_FREELANCE = 0;
+    const TYPE_CUSTOMER = 1;
+
+    /**
+     * Сценарии
+     * 
+     * - Авторизация
+     * - Регистрация
+     * - Восстановление пароля
+     * - Смена пароля
+     * - Персональная информация (имя, фамилия, почта, биография и тд)
+     */
+    const SCENARIO_LOGIN = 'login';
+    const SCENARIO_SIGNUP = 'signup';
 
     /**
      * {@inheritdoc}
@@ -65,18 +81,38 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_LOGIN => ['username', 'password'],
+            self::SCENARIO_SIGNUP => ['username', 'email', 'first_name', 'last_name', 'type', 'password'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'first_name', 'last_name'], 'string', 'max' => 255],
+            [
+                'avatar', 'image', 'extensions' => ['png','jpg', 'gif'],
+                'maxSize' => 1024*1024,
+                'minWidth' => 100, 'maxWidth' => 1000,
+                'minHeight' => 100, 'maxHeight' => 1000,
+                'skipOnEmpty' => true,
+            ],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_SIGNUP],
+            ['status', 'in', 'range' => [self::STATUS_SIGNUP, self::STATUS_ACTIVE, self::STATUS_BANNED, self::STATUS_DELETE]],
+            ['type', 'default', 'value' => self::TYPE_FREELANCE],
+            ['type', 'in', 'range' => [self::TYPE_FREELANCE, self::TYPE_CUSTOMER]],
         ];
     }
 
@@ -219,6 +255,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function generatePasswordResetToken()
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getTypeList()
+    {
+        return [
+            'Фрилансер', 'Заказчик'
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getTypeName($id)
+    {
+        $types = self::getTypeList();
+
+        return $types[self::$type];
     }
 
     /**

@@ -26,6 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= $form->field($model, 'email') ?>
 
+                    <?= $form->field($model, 'first_name') ?>
+
+                    <?= $form->field($model, 'last_name') ?>
+
+                    <?= $form->field($model, 'type')->dropDownList($typeList) ?>
+
                     <?= $form->field($model, 'password')->passwordInput() ?>
 
                     <div class="form-group">

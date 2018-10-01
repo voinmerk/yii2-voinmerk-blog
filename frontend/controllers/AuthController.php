@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
+use common\models\User;
 use common\models\LoginForm;
 
 use frontend\models\forms\PasswordResetRequestForm;
@@ -100,7 +101,9 @@ class AuthController extends Controller
      */
     public function actionSignup()
     {
+        $typeList = User::getTypeList();
         $model = new SignupForm();
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -111,6 +114,7 @@ class AuthController extends Controller
 
         return $this->render('signup', [
             'model' => $model,
+            'typeList' => $typeList,
         ]);
     }
 
