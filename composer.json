@@ -23,7 +23,8 @@
         "mihaildev/yii2-ckeditor": "*",
         "zelenin/yii2-slug-behavior": "~1.5.1",
         "nkovacs/yii2-datetimepicker": "*",
-        "rmrevin/yii2-fontawesome": "2.10.*"
+        "rmrevin/yii2-fontawesome": "2.10.*",
+        "mihaildev/yii2-elfinder": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
